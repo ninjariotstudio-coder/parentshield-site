@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NinjaRiot_Studios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Loading logo overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-logo {
+            width: 40%;
+            height: 80%;
+            border-radius: 20px;
+            /*box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);*/
+            animation: pulse 2.3s ease-in-out infinite;
+            object-fit: contain;
+	    mix-blend-mode: multiply;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Header section */
+        .header {
+            height: 30vh;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .header-logo {
+            width: 180px;
+            height: 180px;
+            /*border-radius: 12px;*/
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15);
+            object-fit: contain;
+	    mix-blend-mode: multiply;
+        }
+
+        /* Main content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .content-section {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+	ul {
+	    margin: 20px 0;
+	    padding-left: 10;
+	    list-style: none;
+	}
+
+	li {
+	    position: relative;
+	    padding-left: 40px;
+	    margin-bottom: 12px;
+	    font-size: 1.1rem;
+	    color: #666;
+	    line-height: 1.6;
+	}
+
+	li::before {
+	    content: "•";
+	    color: #667eea;
+	    font-weight: bold;
+	    font-size: 1.4rem;
+	    position: absolute;
+	    left: 0;
+	    top: -2px;
+	}
+
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .footer .copyright {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer .trademark {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .footer .permissions {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+	.table-container {
+    	    overflow-x: auto;
+    	    margin: 20px 0;
+    	    border-radius: 12px;
+    	    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+	}
+
+	.data-table {
+	    width: 100%;
+	    border-collapse: collapse;
+	    background: white;
+	    font-size: 1rem;
+	}
+
+	.data-table th {
+	    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	    color: white;
+	    padding: 15px 20px;
+	    text-align: left;
+	    font-weight: 600;
+	    border: none;
+	}
+
+	.data-table th:first-child {
+	    border-top-left-radius: 12px;
+	}
+
+	.data-table th:last-child {
+	    border-top-right-radius: 12px;
+	}
+
+	.data-table td {
+	    padding: 15px 20px;
+	    border-bottom: 1px solid #e9ecef;
+	    color: #666;
+	}
+
+	.data-table tr:last-child td {
+	    border-bottom: none;
+	}
+
+	.data-table tr:last-child td:first-child {
+	    border-bottom-left-radius: 12px;
+	}
+
+	.data-table tr:last-child td:last-child {
+	    border-bottom-right-radius: 12px;
+	}
+
+	.data-table tbody tr:hover {
+	    background-color: #f8f9fa;
+	}
+
+	.encrypted-yes {
+	    text-align: center;
+	    color: #28a745;
+	    font-size: 1.2rem;
+	}
+
+	.encrypted-no {
+	    text-align: center;
+	    color: #dc3545;
+	    font-size: 1.2rem;
+	}
+
+	.data-table td:first-child {
+	    font-weight: 600;
+	    color: #333;
+	}
+
+	/* Responsive design */
+	@media (max-width: 768px) {
+	    .data-table th,
+	    .data-table td {
+	    padding: 12px 15px;
+	    font-size: 0.9rem;
+        }
+    
+        .data-table th:nth-child(3),
+        .data-table td:nth-child(3) {
+            min-width: 200px;
+        }
+    }
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+
+            .header-logo {
+                width: 100px;
+                height: 100px;
+                font-size: 24px;
+            }
+
+            .loading-logo {
+                width: 150px;
+                height: 150px;
+                font-size: 36px;
+            }
+
+            .main-content {
+                padding: 30px 15px;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay with large logo -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <img src="ParentShield_Logo.jpg" alt="ParentShieldLogo" class="loading-logo">
+    </div>
+
+    <!-- Header section -->
+    <header class="header">
+        <img src="NinjaRiot_Studios_Emblam.jpg" alt="NinjaRiot_Studios_Emblam" class="header-logo">
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <section class="content-section" id="about">
+            <h2>🛡️ What is ParentShield?</h2>
+            <p>ParentShield is a secure, local-first evidence vault built for parents navigating high-conflict custody battles, court disputes, or co-parenting struggles. It’s more than an app—it’s a digital weapon for truth, accountability, and protection. Born out of lived experience and necessity, ParentShield gives parents a way to document, organize, encrypt, and defend their parenting journey without relying on cloud services or broken systems.</p>
+            <p>Everything stays on your device—unless you choose to upload it.</p>
+        </section>
+
+        <section class="content-section" id="services">
+            <h2>🎯 Why ParentShield Exists</h2>
+            <p>Most family court systems don’t protect good parents. Evidence gets ignored. Lies go unchecked. And fathers especially are often forced to prove they’re fit when they’ve done nothing wrong.</p>
+            <p>ParentShield was created for people in that fight.</p>
+	    <p>The app empowers users with:</p>
+		<ul>
+			<li>Court-ready documentation</li>
+			<li>Timestamped incident logging</li>
+			<li>Encrypted, tamper-proof records</li>
+			<li>Visual and digital evidence vaulting</li>
+			<li>AI-powered legal log summaries</li>
+			<li>Secure PIN-based access</li>
+			<li>Manual upload (no automatic cloud sync)</li>
+		</ul>
+	    <p>This tool doesn’t just help you keep track—it helps you build a defense.</p>
+        </section>
+
+        <section class="content-section" id="contact">
+            <h2>🧠 The Core Architecture (NinjaCore)</h2>
+            <p>At the heart of ParentShield is NinjaCore, a modular system designed to handle high-conflict logging, military-grade encryption, and flexible expansion into AI, automation, and decentralized storage.</p>
+            <h3>NinjaCore Highlights:</h3>
+	    <p style="padding-left: 20px;">EncryptionServiceHelper: Centralized encryption/decryption that keeps sensitive logs secure (text-based only; images/PDFs stay unencrypted for legal compatibility).</p>
+	    <p style="padding-left: 20px;">EncryptedMetaService: Handles metadata indexing for secure logs, used across all vault types.</p>
+	    <p style="padding-left: 20px;">Modular Vault Screens: Separate screens for Legal Logs, Visitation Logs, Communication, Child Support, and Digital Evidence.</p>
+	    <p style="padding-left: 20px;">First-time Setup Flow: Requires PIN + at least 1 parent + 1 child profile before anything else loads.</p>
+	    <p style="padding-left: 20px;">No Google, Firebase, or 3rd party tracking: Fully independent. Full control.</p>
+        </section>
+
+        <section class="content-section" id="contact">
+            <h2>🔐 What’s Stored?</h2>
+            <p>Here's a breakdown of the different types of data and their encryption status:</p>
+    		<div class="table-container">
+        		<table class="data-table">
+            	<thead>
+                	<tr>
+                    		<th>Type</th>
+                    		<th>Encrypted?</th>
+                    		<th>Notes</th>
+                	</tr>
+            	</thead>
+            	<tbody>
+                	<tr>
+                    		<td>Legal Logs</td>
+                    		<td class="encrypted-yes">✅</td>
+                    		<td>AI-suggested categories, timestamped</td>
+                	</tr>
+                	<tr>
+                    		<td>Communication Logs</td>
+                    		<td class="encrypted-yes">✅</td>
+                    		<td>Call notes, denied access, etc.</td>
+                	</tr>
+                	<tr>
+                    		<td>Visitation Logs</td>
+                    		<td class="encrypted-yes">✅</td>
+                    		<td>Drop-off failures, missed pickups</td>
+                	</tr>
+                	<tr>
+                    		<td>Child Support Logs</td>
+                    		<td class="encrypted-yes">✅</td>
+                    		<td>Payments, disputes, agreements</td>
+                	</tr>
+                	<tr>
+                    		<td>Digital Evidence</td>
+                    		<td class="encrypted-no">❌</td>
+                    		<td>Images, videos, PDFs viewable on device</td>
+                	</tr>
+            	</tbody>
+            </table>
+        </div>
+    </section>
+
+        <section class="content-section" id="contact">
+            <h2>Get In Touch</h2>
+            <p>THIS SPACE FOR SOCIAL MEDIA AND APP DOWNLOAD LINKS</p>
+            <p>You can link to your social media profiles, email, or any other external websites you'd like to reference.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© 2025 NinjaRiot Studios. All rights reserved.</p>
+            <p class="trademark">All trademarks, logos, and brand names are the property of NinjaRiot Studios, LLC.</p>
+            <p class="permissions">
+                No part of this website, including but not limited to text, graphics, images, logos, and other materials, 
+                may be reproduced, distributed, transmitted, or used in any form or by any means without the prior written 
+                permission of the copyright owner. Unauthorized use is strictly prohibited and may result in legal action.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Hide the loading overlay after 3 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.classList.add('hidden');
+                
+                // Remove the overlay from the DOM after the fade transition
+                setTimeout(function() {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 3000); // 3 seconds delay
+        });
+    </script>
+</body>
+</html>
